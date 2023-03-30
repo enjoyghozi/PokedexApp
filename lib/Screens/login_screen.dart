@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(
                     fontSize: 33, 
                     fontWeight: FontWeight.bold, 
-                    color: Color.fromARGB(228, 255, 218, 7)),),
+                    color: Colors.amber),),
                 ),
                 Text("There's No Sense In Going Out Of ", 
                   textAlign: TextAlign.center, 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'Screens/login_screen.dart';
+// import 'Screens/login_screen.dart';
+import 'Screens/welcome_screen.dart';
 
 void main() {
   runApp(const PokedexApp());
@@ -14,7 +15,7 @@ class PokedexApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: WelcomeScreen(),
     );
   }
 }
