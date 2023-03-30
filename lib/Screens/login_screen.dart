@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:pokedexapp/Screens/home_screen.dart';
 
-class LoginScreen extends StatelessWidget {
-   LoginScreen({super.key});
-bool _obscureText = true;
-final TextEditingController _nameController = TextEditingController();
-final TextEditingController _passwordController = TextEditingController();
+import '../Widget/custom_text_form_field.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool _obscureText = true;
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -52,20 +61,19 @@ final TextEditingController _passwordController = TextEditingController();
                       ),
                     ),
                   ),
-                TextFormField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.person),
-                      hintText: 'Enter your name',
-                    ),
-                    validator: (value){
-                      if(value == ''){
-                        return "Please enter your name";
-                      }else {
-                        return null;
-                      }
-                    },
-                  ),
+                CustomTextFormField(
+                  controller: _nameController, 
+                  hintText: 'Enter your name', 
+                  obscureText: false, 
+                  icon: Icons.person,
+                  validator: (value){
+                    if(value == ''){
+                      return "Please enter your name";
+                    }else {
+                      return null;
+                    }
+                  },
+                ),
                 SizedBox(height: 40),
                 Align(
                     alignment: Alignment.bottomLeft,
@@ -77,28 +85,30 @@ final TextEditingController _passwordController = TextEditingController();
                     ),
                   ),
                 TextFormField(
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.lock),
-                      suffixIcon: GestureDetector(
-                        onTap: () {
-                            _obscureText = !_obscureText;
-                        },
-                        child: Icon(_obscureText 
-                          ? Icons.visibility 
-                          : Icons.visibility_off),
-                      ),
-                      hintText: 'Enter your password',
-                    ),
-                    validator: (value){
-                      if(value == ''){
-                        return "Please enter your password";
-                      }else {
-                        return null;
-                      }
-                    },
-                    obscureText: _obscureText,
+                  controller: _passwordController, 
+                  decoration: InputDecoration(
+                    hintText: 'Enter your password', 
+                    prefixIcon: Icon(Icons.lock),
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                      child: Icon(_obscureText 
+                      ? Icons.visibility 
+                      : Icons.visibility_off),
+                    )
                   ),
+                  obscureText: _obscureText, 
+                  validator: (value){
+                  if(value == ''){
+                    return "Please enter your password";
+                  }else {
+                    return null;
+                  }
+                },
+                ),
                 SizedBox(height: 55),
                 InkWell(
                   child: Container(
@@ -119,6 +129,7 @@ final TextEditingController _passwordController = TextEditingController();
                   ),
                   onTap: () {
                     print('sign in pressed');
+                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext) => HomeScreen()));
                   }
                 ),
                 Padding(
