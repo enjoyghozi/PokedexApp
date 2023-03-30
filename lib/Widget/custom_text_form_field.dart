@@ -17,6 +17,13 @@ class CustomTextFormField extends StatelessWidget {
         decoration: InputDecoration(
           prefixIcon: Icon(icon),
           hintText: hintText,
+          prefixIconColor: Colors.blue,
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.blue,
+              width: 1.0,
+            ),
+          ),
         ),
       );
   }

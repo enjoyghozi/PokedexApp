@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:pokedexapp/Screens/home_screen.dart';
+import 'package:pokedexapp/Screens/signup_screen.dart';
 
 import '../Widget/custom_text_form_field.dart';
 
@@ -89,6 +90,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   decoration: InputDecoration(
                     hintText: 'Enter your password', 
                     prefixIcon: Icon(Icons.lock),
+                    prefixIconColor: Colors.blue,
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                        color: Colors.blue,
+                        width: 1.0,
+                      ),
+                    ),
                     suffixIcon: GestureDetector(
                       onTap: () {
                         setState(() {
@@ -132,15 +140,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext) => HomeScreen()));
                   }
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: GestureDetector(
-                    child: const Text("Don't have an account? Sign Up"),
-                      onTap: () {
-                        print('Sign up button');
-                      },
-                  ),
-                )
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Don't have an account?"),
+                    TextButton(onPressed: () {
+                      print('Sign up button');
+                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext) => SignUpScreen()));
+                    }, child: Text("Sign Up", 
+                        style: TextStyle(
+                          color: Colors.amber,
+                          fontWeight: FontWeight.bold, 
+                        ), 
+                      )
+                    )
+                  ],
+                ),
               ],
             ),
           ),
