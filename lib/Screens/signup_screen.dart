@@ -28,11 +28,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                _backButton(context),
-                _circleAvatar(context),
-                _header(context),
-                _inputField(context),
-                _buttonRegister(context)
+                _backButton(context), // Button back
+                _circleAvatar(context), // Circle Avatar
+                _header(context), // Text Header
+                _inputField(context), // Input Form Field
+                _buttonRegister(context) // Button Register
               ],
             ),
           ),
@@ -41,6 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
+  // Section Back button
   _backButton(context) {
     return Column(
       children: [
@@ -69,7 +70,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ],
     );
   }
+  // End Back button
 
+  // Section Circle Avatar
   _circleAvatar(context) {
     return Column(
       children: [
@@ -80,7 +83,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ],
     );
   }
+  // End Circle Avatar
 
+  // Section Header
   _header(context) {
     return Column(
       children: [
@@ -95,7 +100,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ],
     );
   }
+  // End Header
 
+  // Section Input Form Field
   _inputField(context) {
     return Column(
       children: [
@@ -231,7 +238,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ],
     );
   }
+  // End Input Form Field
 
+  //Section Buton Register
   _buttonRegister(context) {
     return Column(
       children: [
@@ -261,4 +270,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ],
     );
   }
+  // End Button Register
 }

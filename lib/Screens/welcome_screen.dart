@@ -20,10 +20,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           margin: EdgeInsets.all(24),
           child: Column(
             children: [
-              _header(context),
-              _description(context),
-              _image(context),
-              _button(context)
+              _header(context), // Text Header
+              _description(context), // Description
+              _image(context), // Image
+              _button(context) // Button Change Page
             ],
           ),
         )
@@ -31,6 +31,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
   }
 
+  // Section Text Header
   _header(context) {
     return Column(
       children: [
@@ -48,7 +49,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ],
     );
   }
+  //  End Text Header
 
+  // Section Description
   _description(context) {
     return Column(
       children: [
@@ -74,7 +77,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ],
     );
   }
+  // End Description
 
+  // Section Image
   _image(context) {
     return Container(
       width: 150,
@@ -86,7 +91,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ),
     );
   }
+  // End Image
   
+  // Section Button Next Page
   _button(context)  {
     return Container(
       child: Column(
@@ -118,4 +125,5 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ),
     );
   }
+  // End Button Next Page
 }

@@ -28,12 +28,12 @@ class _LoginScreenState extends State<LoginScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                _logo(context),
-                _header(context),
-                _description(context),
-                _inputField(context),
-                _buttonSignIn(context),
-                _row(context)
+                _logo(context), //Logo Pokemon
+                _header(context), // Header
+                _description(context), // Text Description
+                _inputField(context), // Input Form Field
+                _buttonSignIn(context), // Button Sign In
+                _row(context), // Row Text Under Button
               ],
             ),
           ),
@@ -41,6 +41,8 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+  // Logo Pokemon
   _logo(context) {
     return Container(
       height: 200,
@@ -53,7 +55,9 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+  // End Logo Pokemon
 
+  // Section Header
   _header(context) {
     return Column(
       children: [
@@ -70,6 +74,9 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     );
   }
+  // End Header
+
+  // Text Description
   _description(context) {
     return Column(
       children: [
@@ -97,6 +104,9 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     );
   }
+  // End Description
+
+  // Input Form Field
   _inputField(context) {
     return Column(
       children: [
@@ -168,7 +178,9 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     );
   }
+  // End Input Form Field
 
+  // Button SignIn
   _buttonSignIn(context) {
     return Column(
       children: [
@@ -198,6 +210,9 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     );
   }
+  // End Button
+
+  // Row Text
   _row(context) {
     return Column(
       children: [
@@ -220,4 +235,5 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     );
   }
+  // End Row Text
 }

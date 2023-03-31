@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "98676751264",
+    "project_id": "pokedexghozi",
+    "storage_bucket": "pokedexghozi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:98676751264:android:6f6d4d1da3ff048b0982c5",
+        "android_client_info": {
+          "package_name": "com.example.pokedexapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "98676751264-faeqg1bk6pvba98hfohips96stkau8dv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXI9I7RWK9i61r69jea-DjPoPK349rUV0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "98676751264-faeqg1bk6pvba98hfohips96stkau8dv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
