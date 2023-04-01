@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -32,21 +30,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: Container(
-          margin: EdgeInsets.all(24),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                _backButton(context), // Button back
-                _circleAvatar(context), // Circle Avatar
-                _header(context), // Text Header
-                _inputField(context), // Input Form Field
-                _buttonRegister(context) // Button Register
-              ],
+      child: Form(
+        key: _formKey,
+        child: Scaffold(
+          body: Container(
+            margin: EdgeInsets.all(24),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  _backButton(context), // Button back
+                  _circleAvatar(context), // Circle Avatar
+                  _header(context), // Text Header
+                  _inputField(context), // Input Form Field
+                  _buttonRegister(context) // Button Register
+                ],
+              ),
             ),
-          ),
-        )
+          )
+        ),
       ),
     );
   }
@@ -247,7 +248,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         TextFormField(
           controller: _rePasswordController, 
           decoration: InputDecoration(
-            hintText: 'Re-enter your password', 
+            hintText: 'Re-Enter your password', 
             prefixIcon: Icon(Icons.lock),
             prefixIconColor: Colors.blue,
             enabledBorder: UnderlineInputBorder(
@@ -270,10 +271,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
           obscureText: _obscureText, 
           validator: (value){
             if(_rePasswordController.text.length > 6 && _passwordController.text != value){
-              return "Password didn't match";
+              return "Password must be the same";
             }
             if(value!.isEmpty || value == null) {
-              return "Please re-enter your password";
+              return "Please enter your password";
             }
             else {
               return null;
@@ -308,6 +309,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
           onTap: () {
+            signUp(_emailController.text, _passwordController.text);
             print('sign in pressed');
             // Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext) => HomeScreen()));
           }
@@ -322,7 +324,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (_formKey.currentState!.validate()) {
       await _auth.createUserWithEmailAndPassword(email: email, password: password)
       .then((value) => {
-        // postDetailsToFirestore()
+        postDetailsToFirestore()
       }).catchError((e){
         Fluttertoast.showToast(msg: e!.message);
       });
@@ -348,7 +350,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     Fluttertoast.showToast(msg: "Account created successfuly");
 
     Navigator.pushAndRemoveUntil(
-      (this.context),
+      (context),
       MaterialPageRoute(builder: (context) => HomeScreen()),
       (route) => false);
   }
