@@ -29,6 +29,13 @@
             {
               "client_id": "98676751264-faeqg1bk6pvba98hfohips96stkau8dv.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "98676751264-d755hbqlqn2fk4rqpe353a7o2f71sl5l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pokedexapp"
+              }
             }
           ]
         }

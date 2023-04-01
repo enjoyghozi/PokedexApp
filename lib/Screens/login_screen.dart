@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pokedexapp/Screens/home_screen.dart';
 import 'package:pokedexapp/Screens/signup_screen.dart';
 
@@ -14,30 +16,38 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  final _formKey  = GlobalKey<FormState>();
+
   bool _obscureText = true;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  final _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        // resizeToAvoidBottomInset: false,
-        body: Container(
-          margin: EdgeInsets.all(24),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                _logo(context), //Logo Pokemon
-                _header(context), // Header
-                _description(context), // Text Description
-                _inputField(context), // Input Form Field
-                _buttonSignIn(context), // Button Sign In
-                _row(context), // Row Text Under Button
-              ],
+      child: Form(
+        key: _formKey,
+        child: Scaffold(
+          // resizeToAvoidBottomInset: false,
+          body: Container(
+            margin: EdgeInsets.all(24),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  _logo(context), //Logo Pokemon
+                  _header(context), // Header
+                  _description(context), // Text Description
+                  _inputField(context), // Input Form Field
+                  _buttonSignIn(context), // Button Sign In
+                  _row(context), // Row Text Under Button
+                ],
+              ),
             ),
-          ),
-        )
+          )
+        ),
       ),
     );
   }
@@ -120,15 +130,31 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
-        CustomTextFormField(
-          controller: _nameController, 
-          hintText: 'Enter your name', 
+        TextFormField(
           obscureText: false, 
-          icon: Icons.person,
+          controller: _nameController, 
+          onSaved: (value) {
+            _nameController.text = value!;
+          },
+          decoration: InputDecoration(
+            hintText: 'Enter your name', 
+            prefixIcon: Icon(Icons.person),
+            prefixIconColor: Colors.blue,
+            enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                color: Colors.blue,
+                width: 1.0,
+              ),
+            ),
+          ),
           validator: (value){
-            if(value == ''){
-              return "Please enter your name";
-            }else {
+            if(value!.isEmpty || _nameController == null){
+              return ("Please enter your name");
+            }
+            if (!RegExp(r'^.{6,}$').hasMatch(value)) {
+              return ("Name must be at least 6 characters");
+            }
+            else {
               return null;
             }
           },
@@ -145,6 +171,9 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         TextFormField(
           controller: _passwordController, 
+          onSaved: (value) {
+            _passwordController.text = value!;
+          },
           decoration: InputDecoration(
             hintText: 'Enter your password', 
             prefixIcon: Icon(Icons.lock),
@@ -168,9 +197,14 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           obscureText: _obscureText, 
           validator: (value){
-            if(value == ''){
+            RegExp regex = new RegExp(r'^.{6,}$');
+            if(value!.isEmpty || value == null) {
               return "Please enter your password";
-            }else {
+            }
+            else if (!regex.hasMatch(value)) {
+              return ("Password must be at least 6 characters");
+            }
+            else {
               return null;
             }
           },
@@ -185,7 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       children: [
         SizedBox(height: 80),
-        InkWell(
+        MaterialButton(
           child: Container(
             height: 55,
             width: MediaQuery.of(context).size.width * 0.9,
@@ -202,9 +236,9 @@ class _LoginScreenState extends State<LoginScreen> {
               borderRadius: BorderRadius.circular(50)
             ),
           ),
-          onTap: () {
-            print('sign in pressed');
-            Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext) => HomeScreen()));
+          onPressed: () {
+            signIn(_nameController.text, _passwordController.text);
+            // signIn(_nameController.text, _passwordController.text);
           }
         ),
       ],
@@ -236,4 +270,18 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
   // End Row Text
+
+  // Section Sign In function
+  void signIn (String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      await _auth
+        .signInWithEmailAndPassword(email: email, password: password)
+        .then((uid) => {
+          Fluttertoast.showToast(msg: "login Successful"),
+          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext) => HomeScreen()))
+        }).catchError((e) {
+          Fluttertoast.showToast(msg: e!.message);
+        });
+    }
+  }
 }

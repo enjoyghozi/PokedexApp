@@ -1,8 +1,14 @@
+import 'dart:js';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pokedexapp/Screens/login_screen.dart';
 
+import '../Models/user_model.dart';
 import '../Widget/custom_text_form_field.dart';
 import 'home_screen.dart';
 
@@ -12,12 +18,16 @@ class SignUpScreen extends StatefulWidget {
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
-final TextEditingController _nameController = TextEditingController();
-final TextEditingController _emailController = TextEditingController();
-final TextEditingController _passwordController = TextEditingController();
-final TextEditingController _rePasswordController = TextEditingController();
 
-bool _obscureText = true;
+  final _auth = FirebaseAuth.instance;
+
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _rePasswordController = TextEditingController();
+
+  bool _obscureText = true;
 class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
@@ -115,15 +125,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
           ),
-        CustomTextFormField(
+        TextFormField(
           controller: _nameController, 
-          hintText: 'Enter your name', 
           obscureText: false, 
-          icon: Icons.person,
+          decoration: InputDecoration(
+            hintText: 'Enter your name', 
+            prefixIcon: Icon(Icons.person),
+            prefixIconColor: Colors.blue,
+            enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                color: Colors.blue,
+                width: 1.0,
+              ),
+            ),
+          ),
           validator: (value){
-            if(value == ''){
-              return "Please enter your name";
-            }else {
+            if(value!.isEmpty || _nameController == null){
+              return ("Please enter your name");
+            }
+            if (!RegExp(r'^.{6,}$').hasMatch(value)) {
+              return ("Name must be at least 6 characters");
+            }
+            else {
               return null;
             }
           },
@@ -138,15 +161,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
           ),
-        CustomTextFormField(
+        TextFormField(
           controller: _emailController, 
-          hintText: 'Enter your email', 
           obscureText: false, 
-          icon: Icons.email,
+          decoration: InputDecoration(
+            hintText: 'Enter your email', 
+            prefixIcon: Icon(Icons.email),
+            prefixIconColor: Colors.blue,
+            enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                color: Colors.blue,
+                width: 1.0,
+              ),
+            ),
+          ),
           validator: (value){
-            if(value == ''){
-              return "Please enter your email";
-            }else {
+            if(value!.isEmpty || _nameController == null){
+              return ("Please enter your email");
+            }
+            if (!RegExp("[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
+              return ("Please enter your valid email");
+            }
+            else {
               return null;
             }
           },
@@ -186,11 +222,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           obscureText: _obscureText, 
           validator: (value){
-          if(value == ''){
-            return "Please enter your password";
-          }else {
-            return null;
-          }
+          RegExp regex = new RegExp(r'^.{6,}$');
+            if(value!.isEmpty || value == null) {
+              return "Please enter your password";
+            }
+            else if (!regex.hasMatch(value)) {
+              return ("Password must be at least 6 characters");
+            }
+            else {
+              return null;
+            }
         },
         ),
         SizedBox(height: 20),
@@ -228,9 +269,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           obscureText: _obscureText, 
           validator: (value){
-            if(value == ''){
+            if(_rePasswordController.text.length > 6 && _passwordController.text != value){
+              return "Password didn't match";
+            }
+            if(value!.isEmpty || value == null) {
               return "Please re-enter your password";
-            }else {
+            }
+            else {
               return null;
             }
           },
@@ -264,11 +309,47 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           onTap: () {
             print('sign in pressed');
-            Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext) => HomeScreen()));
+            // Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext) => HomeScreen()));
           }
         ),
       ],
     );
   }
   // End Button Register
+
+  // Section Sign Up
+  void signUp(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      await _auth.createUserWithEmailAndPassword(email: email, password: password)
+      .then((value) => {
+        // postDetailsToFirestore()
+      }).catchError((e){
+        Fluttertoast.showToast(msg: e!.message);
+      });
+    }
+  }
+
+
+  postDetailsToFirestore() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    UserModel userModel = UserModel();
+
+    
+    userModel.email = user!.email;
+    userModel.uid = user!.uid;
+    userModel.name = _nameController.text;
+
+    await firebaseFirestore
+      .collection("users")
+      .doc(user.uid)
+      .set(userModel.toMap());
+    Fluttertoast.showToast(msg: "Account created successfuly");
+
+    Navigator.pushAndRemoveUntil(
+      (this.context),
+      MaterialPageRoute(builder: (context) => HomeScreen()),
+      (route) => false);
+  }
 }
