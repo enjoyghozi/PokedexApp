@@ -6,16 +6,15 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pokedexapp/Screens/home_screen.dart';
 import 'package:pokedexapp/Screens/signup_screen.dart';
 
-import '../Widget/custom_text_form_field.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignInScreenState extends State<SignInScreen> {
 
   final _formKey  = GlobalKey<FormState>();
 

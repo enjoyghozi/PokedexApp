@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
-import 'login_screen.dart';
+import 'sign_in.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -117,7 +117,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               onTap: () {
                 print('back to LogIn');
-                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext) => LoginScreen()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext) => SignInScreen()));
               }
             ),
           ),

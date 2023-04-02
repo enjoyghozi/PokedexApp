@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pokedexapp/Screens/login_screen.dart';
+import 'package:pokedexapp/Screens/sign_in.dart';
 
 import '../Models/user_model.dart';
-import '../Widget/custom_text_form_field.dart';
 import 'home_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -74,7 +73,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             onTap: () {
               print('back to LogIn');
-              Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext) => LoginScreen()));
+              Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext) => SignInScreen()));
             }
           ),
         ),
