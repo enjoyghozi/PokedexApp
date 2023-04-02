@@ -6,7 +6,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pokedexapp/Screens/home_screen.dart';
 import 'package:pokedexapp/Screens/signup_screen.dart';
 
-
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
@@ -15,8 +14,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-
-  final _formKey  = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   bool _obscureText = true;
   final TextEditingController _nameController = TextEditingController();
@@ -30,23 +28,22 @@ class _SignInScreenState extends State<SignInScreen> {
       child: Form(
         key: _formKey,
         child: Scaffold(
-          // resizeToAvoidBottomInset: false,
-          body: Container(
-            margin: EdgeInsets.all(24),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  _logo(context), //Logo Pokemon
-                  _header(context), // Header
-                  _description(context), // Text Description
-                  _inputField(context), // Input Form Field
-                  _buttonSignIn(context), // Button Sign In
-                  _row(context), // Row Text Under Button
-                ],
-              ),
+            // resizeToAvoidBottomInset: false,
+            body: Container(
+          margin: EdgeInsets.all(24),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                _logo(context), //Logo Pokemon
+                _header(context), // Header
+                _description(context), // Text Description
+                _inputField(context), // Input Form Field
+                _buttonSignIn(context), // Button Sign In
+                _row(context), // Row Text Under Button
+              ],
             ),
-          )
-        ),
+          ),
+        )),
       ),
     );
   }
@@ -71,13 +68,14 @@ class _SignInScreenState extends State<SignInScreen> {
     return Column(
       children: [
         Center(
-          child: Text("Let's get started. ", 
-              textAlign: TextAlign.center,
-              style: TextStyle(
-              fontSize: 33, 
-              fontWeight: FontWeight.bold, 
+          child: Text(
+            "Let's get started. ",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 33,
+              fontWeight: FontWeight.bold,
               color: Colors.amber,
-              ),
+            ),
           ),
         ),
       ],
@@ -91,23 +89,25 @@ class _SignInScreenState extends State<SignInScreen> {
       children: [
         SizedBox(height: 20),
         Center(
-          child: Text("There's No Sense In Going Out Of", 
-              textAlign: TextAlign.center,
-              style: TextStyle(
-              fontSize: 17, 
-              fontWeight: FontWeight.bold, 
+          child: Text(
+            "There's No Sense In Going Out Of",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
               color: Colors.grey,
-              ),
+            ),
           ),
         ),
         Center(
-          child: Text("Your Way To Get Somebody To Like You.", 
-              textAlign: TextAlign.center,
-              style: TextStyle(
-              fontSize: 17, 
-              fontWeight: FontWeight.bold, 
+          child: Text(
+            "Your Way To Get Somebody To Like You.",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
               color: Colors.grey,
-              ),
+            ),
           ),
         ),
       ],
@@ -122,88 +122,81 @@ class _SignInScreenState extends State<SignInScreen> {
         SizedBox(height: 50),
         Align(
           alignment: Alignment.bottomLeft,
-          child: Text("Name",
+          child: Text(
+            "Name",
             textAlign: TextAlign.start,
-            style: TextStyle(
-              color: Colors.blue
-            ),
+            style: TextStyle(color: Colors.blue),
           ),
         ),
         TextFormField(
-          obscureText: false, 
-          controller: _nameController, 
+          obscureText: false,
+          controller: _nameController,
           onSaved: (value) {
             _nameController.text = value!;
           },
           decoration: InputDecoration(
-            hintText: 'Enter your name', 
+            hintText: 'Enter your name',
             prefixIcon: Icon(Icons.person),
             prefixIconColor: Colors.blue,
             enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
+              borderSide: BorderSide(
                 color: Colors.blue,
                 width: 1.0,
               ),
             ),
           ),
-          validator: (value){
-            if(value!.isEmpty || _nameController == null){
+          validator: (value) {
+            if (value!.isEmpty || _nameController == null) {
               return ("Please enter your name");
             }
             if (!RegExp(r'^.{6,}$').hasMatch(value)) {
               return ("Name must be at least 6 characters");
-            }
-            else {
+            } else {
               return null;
             }
           },
         ),
         SizedBox(height: 20),
         Align(
-            alignment: Alignment.bottomLeft,
-            child: Text("Password",
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                color: Colors.blue
-              ),
-            ),
+          alignment: Alignment.bottomLeft,
+          child: Text(
+            "Password",
+            textAlign: TextAlign.start,
+            style: TextStyle(color: Colors.blue),
           ),
+        ),
         TextFormField(
-          controller: _passwordController, 
+          controller: _passwordController,
           onSaved: (value) {
             _passwordController.text = value!;
           },
           decoration: InputDecoration(
-            hintText: 'Enter your password', 
-            prefixIcon: Icon(Icons.lock),
-            prefixIconColor: Colors.blue,
-            enabledBorder: UnderlineInputBorder(
+              hintText: 'Enter your password',
+              prefixIcon: Icon(Icons.lock),
+              prefixIconColor: Colors.blue,
+              enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
-                color: Colors.blue,
-                width: 1.0,
+                  color: Colors.blue,
+                  width: 1.0,
+                ),
               ),
-            ),
-            suffixIcon: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _obscureText = !_obscureText;
-                });
-              },
-              child: Icon(_obscureText 
-              ? Icons.visibility 
-              : Icons.visibility_off),
-            )
-          ),
-          obscureText: _obscureText, 
-          validator: (value){
+              suffixIcon: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _obscureText = !_obscureText;
+                  });
+                },
+                child: Icon(
+                    _obscureText ? Icons.visibility : Icons.visibility_off),
+              )),
+          obscureText: _obscureText,
+          validator: (value) {
             RegExp regex = new RegExp(r'^.{6,}$');
-            if(value!.isEmpty || value == null) {
+            if (value!.isEmpty || value == null) {
               return "Please enter your password";
-            }
-            else if (!regex.hasMatch(value)) {
+            } else if (!regex.hasMatch(value)) {
               return ("Password must be at least 6 characters");
-            }
-            else {
+            } else {
               return null;
             }
           },
@@ -219,27 +212,23 @@ class _SignInScreenState extends State<SignInScreen> {
       children: [
         SizedBox(height: 80),
         MaterialButton(
-          child: Container(
-            height: 55,
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: Center(
-              child: Text('Sign In',
-                  style: TextStyle( 
-                      color: Colors.white, 
-                      fontSize: 18, 
-                      fontWeight: FontWeight.bold
-                    ))
-                  ),
-            decoration: BoxDecoration(
-              color: Colors.amber,
-              borderRadius: BorderRadius.circular(50)
+            child: Container(
+              height: 55,
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Center(
+                  child: Text('Sign In',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold))),
+              decoration: BoxDecoration(
+                  color: Colors.amber, borderRadius: BorderRadius.circular(50)),
             ),
-          ),
-          onPressed: () {
-            signIn(_nameController.text, _passwordController.text);
-            // signIn(_nameController.text, _passwordController.text);
-          }
-        ),
+            onPressed: () {
+              // signIn(_nameController.text, _passwordController.text);
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (BuildContext) => HomeScreen()));
+            }),
       ],
     );
   }
@@ -253,16 +242,19 @@ class _SignInScreenState extends State<SignInScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text("Don't have an account?"),
-            TextButton(onPressed: () {
-              print('Sign up button');
-              Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext) => SignUpScreen()));
-            }, child: Text("Sign Up", 
-                style: TextStyle(
-                  color: Colors.amber,
-                  fontWeight: FontWeight.bold, 
-                ), 
-              )
-            )
+            TextButton(
+                onPressed: () {
+                  print('Sign up button');
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext) => SignUpScreen()));
+                },
+                child: Text(
+                  "Sign Up",
+                  style: TextStyle(
+                    color: Colors.amber,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ))
           ],
         ),
       ],
@@ -271,16 +263,18 @@ class _SignInScreenState extends State<SignInScreen> {
   // End Row Text
 
   // Section Sign In function
-  void signIn (String email, String password) async {
+  void signIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       await _auth
-        .signInWithEmailAndPassword(email: email, password: password)
-        .then((uid) => {
-          Fluttertoast.showToast(msg: "login Successful"),
-          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext) => HomeScreen()))
-        }).catchError((e) {
-          Fluttertoast.showToast(msg: e!.message);
-        });
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((uid) => {
+                Fluttertoast.showToast(msg: "login Successful"),
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (BuildContext) => HomeScreen()))
+              })
+          .catchError((e) {
+        Fluttertoast.showToast(msg: e!.message);
+      });
     }
   }
 }
